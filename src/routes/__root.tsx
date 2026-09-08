@@ -15,10 +15,10 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 declare global {
   interface Window {
     fbq?: ((...args: unknown[]) => void) & {
-      queue?: unknown[][];
+      callMethod?: (...args: unknown[]) => void;
+      queue?: IArguments[];
       loaded?: boolean;
       version?: string;
-      callMethod?: (...args: unknown[]) => void;
     };
     _fbq?: Window["fbq"];
   }
@@ -143,44 +143,44 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   useEffect(() => {
-    if (window.fbq) return;
+    if (window.fbq?.loaded) return;
 
-    // Use Meta's standard browser bootstrap so the Pixel Helper can detect it
-    // and PageView/other events are queued even before fbevents.js finishes loading.
-    const fbq = ((...args: unknown[]) => {
+    // Meta's official browser Pixel bootstrap pattern.
+    const fbq = function (...args: unknown[]) {
       if (fbq.callMethod) {
         fbq.callMethod(...args);
       } else {
-        fbq.queue?.push(args);
+        fbq.queue?.push(arguments);
       }
-    }) as ((...args: unknown[]) => void) & {
-      queue?: unknown[][];
+    } as ((...args: unknown[]) => void) & {
+      callMethod?: (...args: unknown[]) => void;
+      queue?: IArguments[];
       loaded?: boolean;
       version?: string;
-      callMethod?: (...args: unknown[]) => void;
     };
 
+    fbq.push = fbq;
     fbq.loaded = true;
     fbq.version = "2.0";
     fbq.queue = [];
     window.fbq = fbq;
     window._fbq = fbq;
 
+    // Queue init + PageView before the library loads so the external script
+    // can process them exactly like Meta's standard snippet.
     fbq("init", "1360885335597921");
     fbq("track", "PageView");
 
     const script = document.createElement("script");
     script.async = true;
     script.src = "https://connect.facebook.net/en_US/fbevents.js";
+    script.onload = () => {
+      console.log("Meta Pixel loaded: 1360885335597921");
+    };
     script.onerror = () => {
       console.error("Meta Pixel script failed to load");
     };
-    const firstScript = document.getElementsByTagName("script")[0];
-    if (firstScript?.parentNode) {
-      firstScript.parentNode.insertBefore(script, firstScript);
-    } else {
-      document.head.appendChild(script);
-    }
+    document.head.appendChild(script);
   }, []);
 
   return (
