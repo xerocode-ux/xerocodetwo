@@ -14,7 +14,13 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 
 declare global {
   interface Window {
-    fbq?: ((...args: unknown[]) => void) & { queue?: unknown[][] };
+    fbq?: ((...args: unknown[]) => void) & {
+      queue?: unknown[][];
+      loaded?: boolean;
+      version?: string;
+      callMethod?: (...args: unknown[]) => void;
+    };
+    _fbq?: Window["fbq"];
   }
 }
 
@@ -139,23 +145,42 @@ function RootComponent() {
   useEffect(() => {
     if (window.fbq) return;
 
+    // Use Meta's standard browser bootstrap so the Pixel Helper can detect it
+    // and PageView/other events are queued even before fbevents.js finishes loading.
     const fbq = ((...args: unknown[]) => {
-      fbq.queue?.push(args);
-    }) as ((...args: unknown[]) => void) & { queue?: unknown[][] };
+      if (fbq.callMethod) {
+        fbq.callMethod(...args);
+      } else {
+        fbq.queue?.push(args);
+      }
+    }) as ((...args: unknown[]) => void) & {
+      queue?: unknown[][];
+      loaded?: boolean;
+      version?: string;
+      callMethod?: (...args: unknown[]) => void;
+    };
+
+    fbq.loaded = true;
+    fbq.version = "2.0";
     fbq.queue = [];
     window.fbq = fbq;
+    window._fbq = fbq;
+
+    fbq("init", "1360885335597921");
+    fbq("track", "PageView");
 
     const script = document.createElement("script");
     script.async = true;
     script.src = "https://connect.facebook.net/en_US/fbevents.js";
-    script.onload = () => {
-      window.fbq?.("init", "1360885335597921");
-      window.fbq?.("track", "PageView");
-    };
     script.onerror = () => {
       console.error("Meta Pixel script failed to load");
     };
-    document.head.appendChild(script);
+    const firstScript = document.getElementsByTagName("script")[0];
+    if (firstScript?.parentNode) {
+      firstScript.parentNode.insertBefore(script, firstScript);
+    } else {
+      document.head.appendChild(script);
+    }
   }, []);
 
   return (
