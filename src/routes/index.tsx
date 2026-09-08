@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 const WHATSAPP_URL =
-  "https://api.whatsapp.com/send/?phone=639750361145&text=Hello%21+Can+I+get+more+info+on+this%3F&type=phone_number&app_absent=0";
+  "https://api.whatsapp.com/send/?phone=15553454968&text=Hello%21+Can+I+get+more+info+on+this%3F&type=phone_number&app_absent=0";
 
 const TICKERS = [
   { label: "NIFTY", value: "24,812", change: "0.62%", up: true },
