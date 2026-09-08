@@ -12,6 +12,12 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
+declare global {
+  interface Window {
+    fbq?: ((...args: unknown[]) => void) & { queue?: unknown[][] };
+  }
+}
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -103,9 +109,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     scripts: [
       {
-        children: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1360885335597921');fbq('track','PageView');`,
-      },
-      {
         children: `(function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function(){a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments);a.queue=[]};a.queue=[];var s='script';var r=t.createElement(s);r.async=!0;r.src=n;var u=t.getElementsByTagName(s)[0];u.parentNode.insertBefore(r,u);})(window,document,'https://sc-static.net/scevent.min.js');snaptr('init','3a2113b0-47a6-4dfb-8392-c9926315b747',{});snaptr('track','PAGE_VIEW');`,
       },
     ],
@@ -133,9 +136,30 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    if (window.fbq) return;
+
+    const fbq = ((...args: unknown[]) => {
+      fbq.queue?.push(args);
+    }) as ((...args: unknown[]) => void) & { queue?: unknown[][] };
+    fbq.queue = [];
+    window.fbq = fbq;
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://connect.facebook.net/en_US/fbevents.js";
+    script.onload = () => {
+      window.fbq?.("init", "1360885335597921");
+      window.fbq?.("track", "PageView");
+    };
+    script.onerror = () => {
+      console.error("Meta Pixel script failed to load");
+    };
+    document.head.appendChild(script);
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
   );
