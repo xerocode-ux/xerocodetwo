@@ -19,6 +19,7 @@ declare global {
       queue?: IArguments[];
       loaded?: boolean;
       version?: string;
+      push?: typeof window.fbq;
     };
     _fbq?: Window["fbq"];
   }
@@ -107,10 +108,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap",
       },
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
     scripts: [
@@ -145,7 +143,7 @@ function RootComponent() {
   useEffect(() => {
     if (window.fbq?.loaded) return;
 
-    // Meta's official browser Pixel bootstrap pattern.
+    // Meta-compatible browser Pixel bootstrap.
     const fbq = function (...args: unknown[]) {
       if (fbq.callMethod) {
         fbq.callMethod(...args);
@@ -157,6 +155,7 @@ function RootComponent() {
       queue?: IArguments[];
       loaded?: boolean;
       version?: string;
+      push?: typeof window.fbq;
     };
 
     fbq.push = fbq;
@@ -166,20 +165,15 @@ function RootComponent() {
     window.fbq = fbq;
     window._fbq = fbq;
 
-    // Queue init + PageView before the library loads so the external script
-    // can process them exactly like Meta's standard snippet.
+    // Queue these before fbevents.js loads, matching Meta's standard snippet.
     fbq("init", "1360885335597921");
     fbq("track", "PageView");
 
     const script = document.createElement("script");
     script.async = true;
     script.src = "https://connect.facebook.net/en_US/fbevents.js";
-    script.onload = () => {
-      console.log("Meta Pixel loaded: 1360885335597921");
-    };
-    script.onerror = () => {
-      console.error("Meta Pixel script failed to load");
-    };
+    script.onload = () => console.log("Meta Pixel loaded: 1360885335597921");
+    script.onerror = () => console.error("Meta Pixel script failed to load");
     document.head.appendChild(script);
   }, []);
 
