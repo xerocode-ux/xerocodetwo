@@ -86,16 +86,8 @@ function Index() {
     return () => clearInterval(id);
   }, []);
 
-  const trackWhatsAppClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    // Keep the visitor on the page briefly so Meta Pixel can send Subscribe
-    // before the browser navigates to WhatsApp.
-    if (!window.fbq) return;
-
-    event.preventDefault();
-    window.fbq("track", "Subscribe", { content_name: "WhatsApp Channel" });
-    window.setTimeout(() => {
-      window.location.href = WHATSAPP_URL;
-    }, 500);
+  const trackWhatsAppClick = () => {
+    window.fbq?.("track", "Subscribe", { content_name: "WhatsApp Channel" });
   };
 
   const progress = ((10 - seconds) / 10) * 100;
@@ -130,6 +122,8 @@ function Index() {
 
         <a
           href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           onClick={trackWhatsAppClick}
           className="cta-gradient mt-6 flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-lg font-bold text-primary-foreground transition-transform hover:scale-[1.02]"
         >
