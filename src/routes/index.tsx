@@ -8,7 +8,7 @@ declare global {
 }
 
 const WHATSAPP_URL =
-  "https://api.whatsapp.com/send/?phone=15553454968&text=Hello%21+Can+I+get+more+info+on+this%3F&type=phone_number&app_absent=0";
+  "https://api.whatsapp.com/send/?phone=15553427833&text=Hello%21+Can+I+get+more+info+on+this%3F&type=phone_number&app_absent=0";
 
 const TICKERS = [
   { label: "NIFTY", value: "24,812", change: "0.62%", up: true },
