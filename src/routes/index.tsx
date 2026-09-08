@@ -93,12 +93,12 @@ function Index() {
     <div className="flex min-h-screen flex-col">
       <Ticker />
 
-      <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center px-5 pb-14 pt-8 text-center">
+      <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center px-5 pb-14 pt-4 text-center">
         <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-card text-3xl shadow-lg">
           📈
         </div>
 
-        <h1 className="mt-5 text-4xl font-extrabold tracking-tight">
+        <h1 className="mt-3 text-4xl font-extrabold tracking-tight">
           Success <span className="text-primary">With Me</span>
         </h1>
         <p className="mt-1 text-sm font-medium tracking-[0.2em] text-muted-foreground">
