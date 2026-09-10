@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 declare global { interface Window { fbq?: (...args: unknown[]) => void; } }
-const WHATSAPP_URL = "https://api.whatsapp.com/send/?phone=639553311642&text=Hello%21+Can+I+get+more+info+on+this%3F&type=phone_number&app_absent=0";
+const WHATSAPP_URL = "https://api.whatsapp.com/send/?phone=639678471312&text=Hello%21+Can+I+get+more+info+on+this%3F&type=phone_number&app_absent=0";
 const TICKERS = [{ label: "NIFTY", value: "24,812", change: "0.62%", up: true }, { label: "SENSEX", value: "81,240", change: "0.14%", up: false }, { label: "BANKNIFTY", value: "53,190", change: "0.41%", up: true }, { label: "GOLD", value: "71,455", change: "0.28%", up: true }, { label: "USD/INR", value: "83.42", change: "0.09%", up: false }];
 const FEATURES = [{ icon: "💰", label: "Without Investment" }, { icon: "📋", label: "Daily Task" }, { icon: "⚡", label: "Instant Setup" }, { icon: "🔐", label: "Verified Channel" }];
 const STATS = [{ value: "5K+", label: "Members" }, { value: "100%", label: "Free" }, { value: "24/7", label: "Updates" }];
