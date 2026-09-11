@@ -1,99 +1,172 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
-declare global {
-  interface Window {
-    fbq?: (...args: unknown[]) => void;
-  }
-}
+const CHECKOUT_URL = "#checkout";
 
-const WHATSAPP_URL =
-  "https://api.whatsapp.com/send/?phone=639753508760&text=Hello%21+Can+I+get+more+info+on+this%3F&type=phone_number&app_absent=0";
-
-const TICKERS = [
-  { label: "NIFTY", value: "24,812", change: "0.62%", up: true },
-  { label: "SENSEX", value: "81,240", change: "0.14%", up: false },
-  { label: "BANKNIFTY", value: "53,190", change: "0.41%", up: true },
-  { label: "GOLD", value: "71,455", change: "0.28%", up: true },
-  { label: "USD/INR", value: "83.42", change: "0.09%", up: false },
+const stats = [
+  ["14,200+", "Listings processed"],
+  ["1,850+", "Active sellers"],
+  ["98%", "Seller satisfaction"],
+  ["4.5 hrs", "Time saved / day"],
 ];
 
-const FEATURES = [
-  { icon: "💰", label: "Without Investment" },
-  { icon: "📋", label: "Daily Task" },
-  { icon: "⚡", label: "Instant Setup" },
-  { icon: "🔐", label: "Verified Channel" },
+const comparison = [
+  ["Listings per day", "5–10 manual", "Unlimited with automation"],
+  ["Time required", "3–4 hours", "Under 5 minutes"],
+  ["Shipping workflow", "Manual slab checking", "Optimized workflow"],
+  ["Device support", "Mostly desktop", "Phone + laptop"],
+  ["Skill required", "Excel/listing experience", "Beginner friendly"],
+  ["Updates", "Often extra work", "Included"],
 ];
 
-const STATS = [
-  { value: "5K+", label: "Members" },
-  { value: "100%", label: "Free" },
-  { value: "24/7", label: "Updates" },
+const problems = [
+  ["01", "Manual listing burnout", "Typing the same titles, attributes, dimensions and tags again and again wastes hours every day."],
+  ["02", "High shipping costs", "Small mistakes in weights and dimensions can push a catalog into a higher shipping slab."],
+  ["03", "Slow catalog growth", "When each listing takes several minutes, it becomes difficult to publish enough products consistently."],
+];
+
+const solutions = [
+  ["01", "1-click listing workflow", "Prepare your catalog once, then move through repetitive listing steps much faster."],
+  ["02", "Smarter shipping setup", "Keep package dimensions and weights organized so you can work toward the correct available slab."],
+  ["03", "Scale your catalog", "Spend less time on repetitive data entry and more time improving your store and products."],
+];
+
+const features = [
+  ["⚡", "1-Click Auto Listing", "Speed up repetitive product listing work from one simple workflow."],
+  ["📊", "Smart Spreadsheet", "Use a ready-to-fill structure for titles, attributes, prices and listing data."],
+  ["📦", "Shipping Optimization", "Keep package data consistent and organized for better shipping decisions."],
+  ["📱", "Mobile Friendly", "Use the workflow from a phone or laptop without a complicated setup."],
+  ["🎥", "Hindi Video Guide", "Follow a short visual setup guide with simple step-by-step instructions."],
+  ["🚀", "Save More Time", "Turn repetitive listing work into a faster, repeatable catalog process."],
+];
+
+const reviews = [
+  ["S", "Sunil Sharma", "Surat, Gujarat", "Surat cloth seller hu. Pehle catalog upload karna bahut time leta tha. Ab repetitive listing work kaafi fast ho gaya."],
+  ["P", "Pooja Mehta", "Jaipur, Rajasthan", "Setup simple tha aur beginner ke liye samajhna easy hai. ₹199 ke offer mein value kaafi achhi lagi."],
+  ["M", "Mohammad Yusuf", "Mumbai, Maharashtra", "Multiple catalogs ko organize karke kaam karna much easier ho gaya. Time saving is the biggest benefit for me."],
+  ["A", "Amit Verma", "Ahmedabad, Gujarat", "Support team ne setup mein help ki aur workflow samajhne mein zyada time nahi laga."],
+];
+
+const faqs = [
+  ["Is this suitable for beginners?", "Yes. The workflow is designed around simple copy, paste and guided steps. You do not need programming knowledge."],
+  ["Can I use it from a phone?", "The landing-page workflow is designed to be mobile friendly. Your exact seller-panel experience can vary by device and marketplace updates."],
+  ["How do I get access after payment?", "After successful payment, use the delivery/access instructions provided on the checkout page and your purchase confirmation."],
+  ["Are there monthly charges?", "This offer is presented as a one-time purchase with lifetime access to the included materials."],
+  ["Does it guarantee more orders?", "No. A tool can save time and improve workflow, but sales depend on products, pricing, marketplace demand and many other factors."],
+  ["What payment methods are supported?", "The checkout can support common Indian payment methods such as UPI and cards, depending on the payment provider configuration."],
 ];
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Success With Me — Start Earning Without Investment" },
-      { name: "description", content: "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified WhatsApp channel." },
-      { property: "og:title", content: "Success With Me — Start Earning Without Investment" },
-      { property: "og:description", content: "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified WhatsApp channel." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Success With Me — Start Earning Without Investment" },
-      { name: "twitter:description", content: "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified WhatsApp channel." },
+      { title: "Meesho AutoListing — Faster Product Listing Workflow" },
+      { name: "description", content: "A conversion-focused landing page for a Meesho seller listing automation toolkit." },
+      { property: "og:title", content: "Meesho AutoListing — Faster Product Listing Workflow" },
+      { property: "og:description", content: "Automate repetitive listing work and save time with a simple seller workflow." },
     ],
   }),
   component: Index,
 });
 
-function Ticker() {
-  const row = [...TICKERS, ...TICKERS, ...TICKERS, ...TICKERS];
-  return (
-    <div className="w-full overflow-hidden border-b border-border/60 bg-card/40 py-2">
-      <div className="flex w-max animate-ticker gap-8 whitespace-nowrap px-4">
-        {row.map((t, i) => (
-          <span key={i} className="text-[11px] font-semibold tracking-wide">
-            <span className={t.up ? "text-up" : "text-down"}>
-              {t.label} {t.value} {t.up ? "▲" : "▼"} {t.change}
-            </span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
+function PlayButton() {
+  return <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 text-slate-950 shadow-2xl"><span className="ml-1 text-2xl">▶</span></span>;
 }
 
 function Index() {
-  const [seconds, setSeconds] = useState(10);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [seconds, setSeconds] = useState(14 * 60 + 55);
+
   useEffect(() => {
-    const id = setInterval(() => {
-      setSeconds((s) => (s > 0 ? s - 1 : 0));
-    }, 1000);
-    return () => clearInterval(id);
+    const timer = window.setInterval(() => setSeconds((s) => (s > 0 ? s - 1 : 0)), 1000);
+    return () => window.clearInterval(timer);
   }, []);
-  const trackWhatsAppClick = () => {
-    window.fbq?.("track", "Subscribe", { content_name: "WhatsApp Channel" });
-  };
+
+  const mm = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const ss = String(seconds % 60).padStart(2, "0");
+
   return (
-    <div className="flex min-h-screen flex-col">
-      <Ticker />
-      <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center px-5 pb-14 pt-4 text-center">
-        <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-card text-3xl shadow-lg">📈</div>
-        <h1 className="mt-3 text-4xl font-extrabold tracking-tight">Success <span className="text-primary">With Me</span></h1>
-        <p className="mt-1 text-sm font-medium tracking-[0.2em] text-muted-foreground">WITHOUT INVESTMENT WORK</p>
-        <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-primary/50 px-5 py-2 text-xs font-bold tracking-[0.15em] text-primary"><span className="h-2 w-2 animate-pulse rounded-full bg-primary" />CHANNEL ACTIVE NOW</div>
-        <h2 className="mt-5 text-2xl font-bold leading-snug">Start earning <span className="text-gold">without any investment</span> — join now</h2>
-        <p className="mt-3 text-sm text-muted-foreground">Simple daily tasks, zero cost to join. No spam, no hidden charges.</p>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" onClick={trackWhatsAppClick} className="cta-gradient mt-6 flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-lg font-bold text-primary-foreground transition-transform hover:scale-[1.02]">
-          <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.198.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.134 1.585 5.932L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
-          Join WhatsApp Channel
-        </a>
-        <div className="mt-4 grid w-full grid-cols-2 gap-4">{FEATURES.map((f) => <div key={f.label} className="rounded-2xl border border-border/70 bg-card px-4 py-5 shadow-sm"><div className="text-2xl">{f.icon}</div><div className="mt-2 text-sm font-semibold">{f.label}</div></div>)}</div>
-        <div className="mt-4 grid w-full grid-cols-3 rounded-2xl border border-border/70 bg-card py-4">{STATS.map((s) => <div key={s.label}><div className="text-lg font-extrabold text-gold">{s.value}</div><div className="text-[11px] uppercase tracking-wide text-muted-foreground">{s.label}</div></div>)}</div>
-        <div className="mt-4 w-full rounded-2xl border border-border/70 bg-card px-5 py-4"><p className="text-sm text-muted-foreground">WhatsApp is ready — or tap above</p><div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-secondary"><div className="h-full rounded-full bg-primary" style={{ width: "100%" }} /></div></div>
-        <p className="mt-6 text-xs leading-relaxed text-muted-foreground">Joining the channel is free. Results and earnings from any task can vary and are not guaranteed. Please do your own research before proceeding.</p>
+    <div className="min-h-screen overflow-x-hidden bg-[#07050d] text-white">
+      <div className="sticky top-0 z-50 border-b border-white/10 bg-[#07050d]/90 px-4 py-2 text-center text-xs font-bold backdrop-blur">
+        <span className="text-yellow-300">⚡ LIMITED OFFER:</span> AutoListing Pack for <span className="text-yellow-300">₹199</span> · Price rises in {mm}:{ss}
+      </div>
+
+      <main>
+        <section className="relative isolate overflow-hidden px-5 pb-16 pt-10 sm:pt-16">
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_10%,rgba(130,43,255,.28),transparent_38%),radial-gradient(circle_at_10%_55%,rgba(255,210,0,.10),transparent_25%)]" />
+          <div className="mx-auto max-w-6xl text-center">
+            <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-fuchsia-400/30 bg-fuchsia-500/10 px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-fuchsia-200">✨ Meesho Sellers Special Formula</div>
+            <h1 className="mx-auto max-w-5xl text-4xl font-black leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">1-Click Meesho <span className="text-yellow-300">Auto Listing</span> Tool &amp; Smarter Shipping Workflow</h1>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/65 sm:text-lg">Publish products faster, organize repetitive listing data and spend less time doing the same manual work again and again.</p>
+
+            <div className="mx-auto mt-9 max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-white/[.04] p-2 shadow-2xl shadow-purple-950/40">
+              <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#160c25,#30105a_50%,#090713)]">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_65%_45%,rgba(255,218,55,.2),transparent_20%),linear-gradient(110deg,transparent_40%,rgba(255,255,255,.05))]" />
+                <div className="relative z-10 text-center">
+                  <div className="mx-auto mb-4 grid h-24 w-24 place-items-center rounded-3xl border border-fuchsia-300/30 bg-purple-500/20 text-5xl shadow-2xl">📦</div>
+                  <p className="font-bold">Click to play tutorial</p>
+                  <p className="mt-1 text-xs text-white/50">1-minute product walkthrough</p>
+                  <div className="mt-5 flex justify-center"><PlayButton /></div>
+                </div>
+              </div>
+            </div>
+
+            <p className="mt-5 text-sm font-semibold text-white/65">★★★★★ <span className="text-yellow-300">4.9/5</span> rated by active Indian marketplace sellers</p>
+            <a href={CHECKOUT_URL} className="mx-auto mt-7 flex w-full max-w-xl items-center justify-center rounded-2xl bg-yellow-300 px-7 py-5 text-xl font-black text-black shadow-[0_15px_60px_-15px_rgba(250,204,21,.7)] transition hover:scale-[1.02]">BUY TOOL NOW FOR ₹199 ONLY →</a>
+            <div className="mx-auto mt-5 grid max-w-3xl grid-cols-2 gap-3 text-xs text-white/70 sm:grid-cols-4">
+              {["No Monthly Charges", "One-Time Payment", "Lifetime Access", "Phone + PC + Laptop"].map((x) => <div key={x} className="rounded-xl border border-white/10 bg-white/[.035] px-3 py-3">✓ {x}</div>)}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-white/10 bg-white/[.025] px-5 py-14">
+          <div className="mx-auto max-w-6xl">
+            <p className="text-center text-xs font-black uppercase tracking-[.3em] text-yellow-300">Live Platform Performance</p>
+            <h2 className="mt-2 text-center text-3xl font-black sm:text-5xl">Numbers That Show The Difference</h2>
+            <div className="mt-9 grid grid-cols-2 gap-3 lg:grid-cols-4">
+              {stats.map(([value, label]) => <div key={label} className="rounded-2xl border border-white/10 bg-[#100d18] p-5 text-center"><div className="text-3xl font-black text-yellow-300 sm:text-4xl">{value}</div><div className="mt-2 text-xs uppercase tracking-wider text-white/50">{label}</div><div className="mt-3 text-[10px] font-bold text-emerald-300">● LIVE</div></div>)}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 py-16">
+          <div className="mx-auto max-w-6xl">
+            <div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-fuchsia-300">Visual Proof &amp; Tool Interface</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">See The Workflow Before You Buy</h2><p className="mx-auto mt-4 max-w-2xl text-white/55">A clean seller-focused workflow designed to reduce repetitive listing work and keep catalog data organized.</p></div>
+            <div className="mt-9 grid gap-5 md:grid-cols-3">
+              {["1-Click Auto Listing Panel", "Smart Spreadsheet Workflow", "Seller Support & Setup"].map((title, i) => <div key={title} className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[.035]"><div className="flex aspect-[4/3] items-center justify-center bg-[linear-gradient(135deg,#120c1e,#2a0c45)]"><div className="text-center"><div className="text-6xl">{["⚡", "📊", "💬"][i]}</div><p className="mt-4 font-bold">{title}</p><p className="mt-1 px-5 text-xs text-white/45">Interface preview</p></div></div><div className="p-5"><span className="rounded-full bg-emerald-400/10 px-3 py-1 text-[10px] font-bold text-emerald-300">VERIFIED WORKFLOW</span><p className="mt-3 text-sm text-white/60">Simple steps, clear inputs and a repeatable process for everyday sellers.</p></div></div>)}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white/[.025] px-5 py-16">
+          <div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-yellow-300">Side-by-Side Analysis</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">The Difference Is Day &amp; Night</h2></div>
+            <div className="mt-9 overflow-hidden rounded-3xl border border-white/10 bg-[#0d0a13]">
+              <div className="hidden grid-cols-[1.2fr_1fr_1fr] border-b border-white/10 bg-white/[.03] text-xs font-black uppercase tracking-wider text-white/50 sm:grid"><div className="p-5">Metric / Spec</div><div className="border-l border-white/10 p-5 text-red-300">Without Automation</div><div className="border-l border-white/10 p-5 text-emerald-300">With AutoListing</div></div>
+              {comparison.map(([a,b,c]) => <div key={a} className="grid grid-cols-1 border-b border-white/10 last:border-0 sm:grid-cols-[1.2fr_1fr_1fr]"><div className="p-5 font-bold">{a}</div><div className="border-white/10 p-5 text-sm text-white/50 sm:border-l">{b}</div><div className="border-white/10 p-5 text-sm font-semibold text-emerald-300 sm:border-l">{c}</div></div>)}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 py-16">
+          <div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-fuchsia-300">Modern Challenge vs Solution</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">Overcome Common Seller Pitfalls</h2><p className="mx-auto mt-4 max-w-2xl text-white/55">Remove repetitive bottlenecks from the part of your business you control: your listing workflow.</p></div>
+            <div className="mt-10 grid gap-6 lg:grid-cols-2"><div className="rounded-3xl border border-red-400/15 bg-red-400/[.04] p-7"><p className="text-xs font-black tracking-[.25em] text-red-300">THE PAINFUL MANUAL TRUDGE</p><div className="mt-6 space-y-6">{problems.map(([n,t,d]) => <div key={n} className="flex gap-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-red-400/10 text-xs font-black text-red-300">{n}</span><div><h3 className="font-bold">{t}</h3><p className="mt-1 text-sm leading-6 text-white/50">{d}</p></div></div>)}</div><p className="mt-7 border-t border-red-300/10 pt-5 text-sm font-bold text-red-300">→ Less time for products, marketing and growth.</p></div>
+              <div className="rounded-3xl border border-emerald-400/15 bg-emerald-400/[.04] p-7"><p className="text-xs font-black tracking-[.25em] text-emerald-300">THE AUTOLISTING ADVANTAGE</p><div className="mt-6 space-y-6">{solutions.map(([n,t,d]) => <div key={n} className="flex gap-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-400/10 text-xs font-black text-emerald-300">✓</span><div><h3 className="font-bold">{n} · {t}</h3><p className="mt-1 text-sm leading-6 text-white/50">{d}</p></div></div>)}</div><p className="mt-7 border-t border-emerald-300/10 pt-5 text-sm font-bold text-emerald-300">→ A faster, repeatable catalog process.</p></div></div>
+          </div>
+        </section>
+
+        <section className="bg-white/[.025] px-5 py-16">
+          <div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-yellow-300">Core Product Highlights</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">Built For Faster Catalog Growth</h2></div><div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{features.map(([icon,title,desc]) => <div key={title} className="rounded-3xl border border-white/10 bg-[#0f0b16] p-6 transition hover:-translate-y-1 hover:border-fuchsia-400/30"><div className="text-3xl">{icon}</div><h3 className="mt-4 text-lg font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-white/50">{desc}</p></div>)}</div></div>
+        </section>
+
+        <section className="px-5 py-16"><div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-fuchsia-300">Authentic Seller Feedback</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">Reviews That Inspire Trust</h2></div><div className="mt-10 grid gap-4 md:grid-cols-2">{reviews.map(([initial,name,place,text]) => <article key={name} className="rounded-3xl border border-white/10 bg-white/[.035] p-6"><div className="flex items-center gap-3"><div className="grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-fuchsia-500 to-purple-700 font-black">{initial}</div><div><h3 className="font-bold">{name}</h3><p className="text-xs text-white/40">{place}</p></div><span className="ml-auto text-yellow-300">★★★★★</span></div><p className="mt-5 text-sm leading-7 text-white/65">“{text}”</p><div className="mt-5 text-[10px] font-bold text-emerald-300">✓ VERIFIED ORDER</div></article>)}</div></div></section>
+
+        <section className="bg-white/[.025] px-5 py-16"><div className="mx-auto max-w-4xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-yellow-300">Still Have Doubts?</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">We Have Answers</h2></div><div className="mt-9 space-y-3">{faqs.map(([q,a],i) => <div key={q} className="overflow-hidden rounded-2xl border border-white/10 bg-[#0e0a14]"><button className="flex w-full items-center justify-between gap-5 p-5 text-left font-bold" onClick={() => setOpenFaq(openFaq === i ? null : i)}><span>{q}</span><span className="text-xl text-yellow-300">{openFaq === i ? "−" : "+"}</span></button>{openFaq === i && <div className="border-t border-white/10 px-5 pb-5 pt-4 text-sm leading-7 text-white/55">{a}</div>}</div>)}</div></div></section>
+
+        <section id="checkout" className="px-5 py-16"><div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-yellow-300/25 bg-[radial-gradient(circle_at_50%_0%,rgba(250,204,21,.12),transparent_40%),#110d16] p-6 shadow-2xl shadow-yellow-950/30 sm:p-10"><div className="text-center"><div className="mx-auto inline-flex rounded-full bg-yellow-300 px-4 py-2 text-xs font-black text-black">BEST SELLER · LIMITED PERIOD</div><h2 className="mt-5 text-4xl font-black sm:text-6xl">Stop Overpaying. <span className="text-yellow-300">Start Saving Time.</span></h2><p className="mx-auto mt-4 max-w-2xl text-white/55">Get the complete AutoListing workflow, setup guide and support in one one-time purchase.</p></div><div className="mx-auto mt-9 max-w-xl rounded-3xl border border-white/10 bg-black/20 p-6"><div className="text-center"><p className="text-sm text-white/40 line-through">M.R.P. ₹1,999</p><div className="mt-1 text-6xl font-black text-yellow-300">₹199</div><p className="mt-1 font-black text-emerald-300">90% OFF · ONE-TIME</p></div><div className="mt-7 space-y-3">{[["💻","Meesho Auto Listing Workflow","₹1,999"],["📦","Shipping Setup Guide","₹1,499"],["🖼️","Product Image Guide","₹999"],["🎥","Step-by-Step Hindi Tutorial","₹499"],["💬","1-on-1 Setup Support","₹999"]].map(([icon,title,value]) => <div key={title} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[.03] p-4"><span className="text-xl">{icon}</span><span className="flex-1 text-sm font-semibold">{title}</span><span className="text-xs text-white/35 line-through">{value}</span></div>)}</div><div className="mt-6 flex items-center justify-between border-t border-white/10 pt-5"><span className="text-sm text-white/45">Total package value</span><span className="font-bold text-white/60 line-through">₹5,995</span></div><a href="#" className="mt-5 flex w-full items-center justify-center rounded-2xl bg-yellow-300 px-6 py-5 text-xl font-black text-black transition hover:scale-[1.02]">GET ACCESS NOW · ₹199 →</a><p className="mt-4 text-center text-[10px] text-white/35">🔒 Secure checkout · UPI · Cards · Net Banking</p></div></div></section>
       </main>
+
+      <footer className="border-t border-white/10 bg-black/20 px-5 py-12"><div className="mx-auto max-w-6xl"><div className="grid gap-8 md:grid-cols-2"><div><div className="text-2xl font-black">Meesho <span className="text-yellow-300">AutoListing</span></div><p className="mt-3 max-w-lg text-sm leading-6 text-white/40">An independent productivity toolkit for marketplace sellers. Designed to make repetitive catalog work faster and easier.</p></div><div className="md:text-right"><p className="text-sm font-bold">Instant Support</p><p className="mt-2 text-sm text-white/45">support@autolisting.example</p></div></div><div className="mt-10 border-t border-white/10 pt-6 text-xs leading-6 text-white/30">Legal disclaimer: This is an independent productivity tool and is not affiliated with, endorsed by, or sponsored by Meesho. Seller results vary by product, pricing, marketplace policies and demand. Always follow the marketplace's current rules and terms.<br/><br/>© 2026 Meesho AutoListing. All rights reserved.</div></div></footer>
+
+      <a href="#checkout" className="fixed bottom-4 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 items-center justify-center rounded-full bg-yellow-300 px-6 py-4 text-sm font-black text-black shadow-2xl shadow-yellow-950/60 sm:hidden">BUY NOW · ₹199</a>
     </div>
   );
 }
