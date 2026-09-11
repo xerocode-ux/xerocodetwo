@@ -2,160 +2,74 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 const CHECKOUT_URL = "#checkout";
+const TUTORIAL_VIDEO = "https://res.cloudinary.com/dpbnvu2g/video/upload/v1788065206/video_260830_101326.mp4";
 
 const stats = [
-  ["14,200+", "Listings processed"],
-  ["1,850+", "Active sellers"],
-  ["98%", "Seller satisfaction"],
-  ["4.5 hrs", "Time saved / day"],
+  ["14,200+", "Listings processed"], ["1,850+", "Active sellers"], ["98%", "Seller satisfaction"], ["4.5 hrs", "Time saved / day"],
 ];
-
 const comparison = [
-  ["Listings per day", "5–10 manual", "Unlimited with automation"],
-  ["Time required", "3–4 hours", "Under 5 minutes"],
-  ["Shipping workflow", "Manual slab checking", "Optimized workflow"],
-  ["Device support", "Mostly desktop", "Phone + laptop"],
-  ["Skill required", "Excel/listing experience", "Beginner friendly"],
-  ["Updates", "Often extra work", "Included"],
+  ["Listings per day", "5–10 manual", "Unlimited with automation"], ["Time required", "3–4 hours", "Under 5 minutes"], ["Shipping workflow", "Manual slab checking", "Optimized workflow"], ["Device support", "Mostly desktop", "Phone + laptop"], ["Skill required", "Excel/listing experience", "Beginner friendly"], ["Updates", "Often extra work", "Included"],
 ];
-
 const problems = [
-  ["01", "Manual listing burnout", "Typing the same titles, attributes, dimensions and tags again and again wastes hours every day."],
-  ["02", "High shipping costs", "Small mistakes in weights and dimensions can push a catalog into a higher shipping slab."],
-  ["03", "Slow catalog growth", "When each listing takes several minutes, it becomes difficult to publish enough products consistently."],
+  ["01", "Manual listing burnout", "Typing the same titles, attributes, dimensions and tags again and again wastes hours every day."], ["02", "High shipping costs", "Small mistakes in weights and dimensions can push a catalog into a higher shipping slab."], ["03", "Slow catalog growth", "When each listing takes several minutes, it becomes difficult to publish enough products consistently."],
 ];
-
 const solutions = [
-  ["01", "1-click listing workflow", "Prepare your catalog once, then move through repetitive listing steps much faster."],
-  ["02", "Smarter shipping setup", "Keep package dimensions and weights organized so you can work toward the correct available slab."],
-  ["03", "Scale your catalog", "Spend less time on repetitive data entry and more time improving your store and products."],
+  ["01", "1-click listing workflow", "Prepare your catalog once, then move through repetitive listing steps much faster."], ["02", "Smarter shipping setup", "Keep package dimensions and weights organized so you can work toward the correct available slab."], ["03", "Scale your catalog", "Spend less time on repetitive data entry and more time improving your store and products."],
 ];
-
 const features = [
-  ["⚡", "1-Click Auto Listing", "Speed up repetitive product listing work from one simple workflow."],
-  ["📊", "Smart Spreadsheet", "Use a ready-to-fill structure for titles, attributes, prices and listing data."],
-  ["📦", "Shipping Optimization", "Keep package data consistent and organized for better shipping decisions."],
-  ["📱", "Mobile Friendly", "Use the workflow from a phone or laptop without a complicated setup."],
-  ["🎥", "Hindi Video Guide", "Follow a short visual setup guide with simple step-by-step instructions."],
-  ["🚀", "Save More Time", "Turn repetitive listing work into a faster, repeatable catalog process."],
+  ["⚡", "1-Click Auto Listing", "Speed up repetitive product listing work from one simple workflow."], ["📊", "Smart Spreadsheet", "Use a ready-to-fill structure for titles, attributes, prices and listing data."], ["📦", "Shipping Optimization", "Keep package data consistent and organized for better shipping decisions."], ["📱", "Mobile Friendly", "Use the workflow from a phone or laptop without a complicated setup."], ["🎥", "Hindi Video Guide", "Follow a short visual setup guide with simple step-by-step instructions."], ["🚀", "Save More Time", "Turn repetitive listing work into a faster, repeatable catalog process."],
 ];
-
 const reviews = [
-  ["S", "Sunil Sharma", "Surat, Gujarat", "Surat cloth seller hu. Pehle catalog upload karna bahut time leta tha. Ab repetitive listing work kaafi fast ho gaya."],
-  ["P", "Pooja Mehta", "Jaipur, Rajasthan", "Setup simple tha aur beginner ke liye samajhna easy hai. ₹199 ke offer mein value kaafi achhi lagi."],
-  ["M", "Mohammad Yusuf", "Mumbai, Maharashtra", "Multiple catalogs ko organize karke kaam karna much easier ho gaya. Time saving is the biggest benefit for me."],
-  ["A", "Amit Verma", "Ahmedabad, Gujarat", "Support team ne setup mein help ki aur workflow samajhne mein zyada time nahi laga."],
+  ["S", "Sunil Sharma", "Surat, Gujarat", "Surat cloth seller hu. Pehle catalog upload karna bahut time leta tha. Ab repetitive listing work kaafi fast ho gaya."], ["P", "Pooja Mehta", "Jaipur, Rajasthan", "Setup simple tha aur beginner ke liye samajhna easy hai. ₹199 ke offer mein value kaafi achhi lagi."], ["M", "Mohammad Yusuf", "Mumbai, Maharashtra", "Multiple catalogs ko organize karke kaam karna much easier ho gaya. Time saving is the biggest benefit for me."], ["A", "Amit Verma", "Ahmedabad, Gujarat", "Support team ne setup mein help ki aur workflow samajhne mein zyada time nahi laga."],
 ];
-
 const faqs = [
-  ["Is this suitable for beginners?", "Yes. The workflow is designed around simple copy, paste and guided steps. You do not need programming knowledge."],
-  ["Can I use it from a phone?", "The landing-page workflow is designed to be mobile friendly. Your exact seller-panel experience can vary by device and marketplace updates."],
-  ["How do I get access after payment?", "After successful payment, use the delivery/access instructions provided on the checkout page and your purchase confirmation."],
-  ["Are there monthly charges?", "This offer is presented as a one-time purchase with lifetime access to the included materials."],
-  ["Does it guarantee more orders?", "No. A tool can save time and improve workflow, but sales depend on products, pricing, marketplace demand and many other factors."],
-  ["What payment methods are supported?", "The checkout can support common Indian payment methods such as UPI and cards, depending on the payment provider configuration."],
+  ["Is this suitable for beginners?", "Yes. The workflow is designed around simple copy, paste and guided steps. You do not need programming knowledge."], ["Can I use it from a phone?", "The landing-page workflow is designed to be mobile friendly. Your exact seller-panel experience can vary by device and marketplace updates."], ["How do I get access after payment?", "After successful payment, use the delivery/access instructions provided on the checkout page and your purchase confirmation."], ["Are there monthly charges?", "This offer is presented as a one-time purchase with lifetime access to the included materials."], ["Does it guarantee more orders?", "No. A tool can save time and improve workflow, but sales depend on products, pricing, marketplace demand and many other factors."], ["What payment methods are supported?", "The checkout can support common Indian payment methods such as UPI and cards, depending on the payment provider configuration."],
 ];
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Meesho AutoListing — Faster Product Listing Workflow" },
-      { name: "description", content: "A conversion-focused landing page for a Meesho seller listing automation toolkit." },
-      { property: "og:title", content: "Meesho AutoListing — Faster Product Listing Workflow" },
-      { property: "og:description", content: "Automate repetitive listing work and save time with a simple seller workflow." },
-    ],
-  }),
+  head: () => ({ meta: [
+    { title: "Meesho AutoListing — Faster Product Listing Workflow" },
+    { name: "description", content: "A conversion-focused landing page for a Meesho seller listing automation toolkit." },
+    { property: "og:title", content: "Meesho AutoListing — Faster Product Listing Workflow" },
+    { property: "og:description", content: "Automate repetitive listing work and save time with a simple seller workflow." },
+  ] }),
   component: Index,
 });
-
-function PlayButton() {
-  return <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 text-slate-950 shadow-2xl"><span className="ml-1 text-2xl">▶</span></span>;
-}
 
 function Index() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [seconds, setSeconds] = useState(14 * 60 + 55);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => setSeconds((s) => (s > 0 ? s - 1 : 0)), 1000);
-    return () => window.clearInterval(timer);
-  }, []);
-
+  useEffect(() => { const timer = window.setInterval(() => setSeconds((s) => (s > 0 ? s - 1 : 0)), 1000); return () => window.clearInterval(timer); }, []);
   const mm = String(Math.floor(seconds / 60)).padStart(2, "0");
   const ss = String(seconds % 60).padStart(2, "0");
-
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#07050d] text-white">
-      <div className="sticky top-0 z-50 border-b border-white/10 bg-[#07050d]/90 px-4 py-2 text-center text-xs font-bold backdrop-blur">
-        <span className="text-yellow-300">⚡ LIMITED OFFER:</span> AutoListing Pack for <span className="text-yellow-300">₹199</span> · Price rises in {mm}:{ss}
-      </div>
-
+      <div className="sticky top-0 z-50 border-b border-white/10 bg-[#07050d]/90 px-4 py-2 text-center text-xs font-bold backdrop-blur"><span className="text-yellow-300">⚡ LIMITED OFFER:</span> AutoListing Pack for <span className="text-yellow-300">₹199</span> · Price rises in {mm}:{ss}</div>
       <main>
-        <section className="relative isolate overflow-hidden px-5 pb-16 pt-10 sm:pt-16">
-          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_10%,rgba(130,43,255,.28),transparent_38%),radial-gradient(circle_at_10%_55%,rgba(255,210,0,.10),transparent_25%)]" />
-          <div className="mx-auto max-w-6xl text-center">
-            <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-fuchsia-400/30 bg-fuchsia-500/10 px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-fuchsia-200">✨ Meesho Sellers Special Formula</div>
-            <h1 className="mx-auto max-w-5xl text-4xl font-black leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">1-Click Meesho <span className="text-yellow-300">Auto Listing</span> Tool &amp; Smarter Shipping Workflow</h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/65 sm:text-lg">Publish products faster, organize repetitive listing data and spend less time doing the same manual work again and again.</p>
-
-            <div className="mx-auto mt-9 max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-white/[.04] p-2 shadow-2xl shadow-purple-950/40">
-              <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#160c25,#30105a_50%,#090713)]">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_65%_45%,rgba(255,218,55,.2),transparent_20%),linear-gradient(110deg,transparent_40%,rgba(255,255,255,.05))]" />
-                <div className="relative z-10 text-center">
-                  <div className="mx-auto mb-4 grid h-24 w-24 place-items-center rounded-3xl border border-fuchsia-300/30 bg-purple-500/20 text-5xl shadow-2xl">📦</div>
-                  <p className="font-bold">Click to play tutorial</p>
-                  <p className="mt-1 text-xs text-white/50">1-minute product walkthrough</p>
-                  <div className="mt-5 flex justify-center"><PlayButton /></div>
-                </div>
-              </div>
-            </div>
-
-            <p className="mt-5 text-sm font-semibold text-white/65">★★★★★ <span className="text-yellow-300">4.9/5</span> rated by active Indian marketplace sellers</p>
-            <a href={CHECKOUT_URL} className="mx-auto mt-7 flex w-full max-w-xl items-center justify-center rounded-2xl bg-yellow-300 px-7 py-5 text-xl font-black text-black shadow-[0_15px_60px_-15px_rgba(250,204,21,.7)] transition hover:scale-[1.02]">BUY TOOL NOW FOR ₹199 ONLY →</a>
-            <div className="mx-auto mt-5 grid max-w-3xl grid-cols-2 gap-3 text-xs text-white/70 sm:grid-cols-4">
-              {["No Monthly Charges", "One-Time Payment", "Lifetime Access", "Phone + PC + Laptop"].map((x) => <div key={x} className="rounded-xl border border-white/10 bg-white/[.035] px-3 py-3">✓ {x}</div>)}
+        <section className="relative isolate overflow-hidden px-5 pb-16 pt-10 sm:pt-16"><div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_10%,rgba(130,43,255,.28),transparent_38%),radial-gradient(circle_at_10%_55%,rgba(255,210,0,.10),transparent_25%)]" /><div className="mx-auto max-w-6xl text-center">
+          <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-fuchsia-400/30 bg-fuchsia-500/10 px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-fuchsia-200">✨ Meesho Sellers Special Formula</div>
+          <h1 className="mx-auto max-w-5xl text-4xl font-black leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">1-Click Meesho <span className="text-yellow-300">Auto Listing</span> Tool &amp; Smarter Shipping Workflow</h1>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/65 sm:text-lg">Publish products faster, organize repetitive listing data and spend less time doing the same manual work again and again.</p>
+          <div className="mx-auto mt-9 max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-white/[.04] p-2 shadow-2xl shadow-purple-950/40">
+            <div className="relative overflow-hidden rounded-2xl bg-black">
+              <video className="block aspect-video w-full rounded-2xl bg-black object-contain" controls playsInline preload="metadata" poster="" aria-label="Meesho AutoListing tutorial video"><source src={TUTORIAL_VIDEO} type="video/mp4" />Your browser does not support HTML5 video.</video>
             </div>
           </div>
-        </section>
+          <p className="mt-3 text-xs text-white/40">▶ Tutorial video · Tap the play button to start</p>
+          <p className="mt-5 text-sm font-semibold text-white/65">★★★★★ <span className="text-yellow-300">4.9/5</span> rated by active Indian marketplace sellers</p>
+          <a href={CHECKOUT_URL} className="mx-auto mt-7 flex w-full max-w-xl items-center justify-center rounded-2xl bg-yellow-300 px-7 py-5 text-xl font-black text-black shadow-[0_15px_60px_-15px_rgba(250,204,21,.7)] transition hover:scale-[1.02]">BUY TOOL NOW FOR ₹199 ONLY →</a>
+          <div className="mx-auto mt-5 grid max-w-3xl grid-cols-2 gap-3 text-xs text-white/70 sm:grid-cols-4">{["No Monthly Charges", "One-Time Payment", "Lifetime Access", "Phone + PC + Laptop"].map((x) => <div key={x} className="rounded-xl border border-white/10 bg-white/[.035] px-3 py-3">✓ {x}</div>)}</div>
+        </div></section>
 
-        <section className="border-y border-white/10 bg-white/[.025] px-5 py-14">
-          <div className="mx-auto max-w-6xl">
-            <p className="text-center text-xs font-black uppercase tracking-[.3em] text-yellow-300">Live Platform Performance</p>
-            <h2 className="mt-2 text-center text-3xl font-black sm:text-5xl">Numbers That Show The Difference</h2>
-            <div className="mt-9 grid grid-cols-2 gap-3 lg:grid-cols-4">
-              {stats.map(([value, label]) => <div key={label} className="rounded-2xl border border-white/10 bg-[#100d18] p-5 text-center"><div className="text-3xl font-black text-yellow-300 sm:text-4xl">{value}</div><div className="mt-2 text-xs uppercase tracking-wider text-white/50">{label}</div><div className="mt-3 text-[10px] font-bold text-emerald-300">● LIVE</div></div>)}
-            </div>
-          </div>
-        </section>
+        <section className="border-y border-white/10 bg-white/[.025] px-5 py-14"><div className="mx-auto max-w-6xl"><p className="text-center text-xs font-black uppercase tracking-[.3em] text-yellow-300">Live Platform Performance</p><h2 className="mt-2 text-center text-3xl font-black sm:text-5xl">Numbers That Show The Difference</h2><div className="mt-9 grid grid-cols-2 gap-3 lg:grid-cols-4">{stats.map(([value,label]) => <div key={label} className="rounded-2xl border border-white/10 bg-[#100d18] p-5 text-center"><div className="text-3xl font-black text-yellow-300 sm:text-4xl">{value}</div><div className="mt-2 text-xs uppercase tracking-wider text-white/50">{label}</div><div className="mt-3 text-[10px] font-bold text-emerald-300">● LIVE</div></div>)}</div></div></section>
 
-        <section className="px-5 py-16">
-          <div className="mx-auto max-w-6xl">
-            <div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-fuchsia-300">Visual Proof &amp; Tool Interface</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">See The Workflow Before You Buy</h2><p className="mx-auto mt-4 max-w-2xl text-white/55">A clean seller-focused workflow designed to reduce repetitive listing work and keep catalog data organized.</p></div>
-            <div className="mt-9 grid gap-5 md:grid-cols-3">
-              {["1-Click Auto Listing Panel", "Smart Spreadsheet Workflow", "Seller Support & Setup"].map((title, i) => <div key={title} className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[.035]"><div className="flex aspect-[4/3] items-center justify-center bg-[linear-gradient(135deg,#120c1e,#2a0c45)]"><div className="text-center"><div className="text-6xl">{["⚡", "📊", "💬"][i]}</div><p className="mt-4 font-bold">{title}</p><p className="mt-1 px-5 text-xs text-white/45">Interface preview</p></div></div><div className="p-5"><span className="rounded-full bg-emerald-400/10 px-3 py-1 text-[10px] font-bold text-emerald-300">VERIFIED WORKFLOW</span><p className="mt-3 text-sm text-white/60">Simple steps, clear inputs and a repeatable process for everyday sellers.</p></div></div>)}
-            </div>
-          </div>
-        </section>
+        <section className="px-5 py-16"><div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-fuchsia-300">Visual Proof &amp; Tool Interface</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">See The Workflow Before You Buy</h2><p className="mx-auto mt-4 max-w-2xl text-white/55">A clean seller-focused workflow designed to reduce repetitive listing work and keep catalog data organized.</p></div><div className="mt-9 grid gap-5 md:grid-cols-3">{["1-Click Auto Listing Panel", "Smart Spreadsheet Workflow", "Seller Support & Setup"].map((title,i) => <div key={title} className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[.035]"><div className="flex aspect-[4/3] items-center justify-center bg-[linear-gradient(135deg,#120c1e,#2a0c45)]"><div className="text-center"><div className="text-6xl">{["⚡","📊","💬"][i]}</div><p className="mt-4 font-bold">{title}</p><p className="mt-1 px-5 text-xs text-white/45">Interface preview</p></div></div><div className="p-5"><span className="rounded-full bg-emerald-400/10 px-3 py-1 text-[10px] font-bold text-emerald-300">VERIFIED WORKFLOW</span><p className="mt-3 text-sm text-white/60">Simple steps, clear inputs and a repeatable process for everyday sellers.</p></div></div>)}</div></div></section>
 
-        <section className="bg-white/[.025] px-5 py-16">
-          <div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-yellow-300">Side-by-Side Analysis</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">The Difference Is Day &amp; Night</h2></div>
-            <div className="mt-9 overflow-hidden rounded-3xl border border-white/10 bg-[#0d0a13]">
-              <div className="hidden grid-cols-[1.2fr_1fr_1fr] border-b border-white/10 bg-white/[.03] text-xs font-black uppercase tracking-wider text-white/50 sm:grid"><div className="p-5">Metric / Spec</div><div className="border-l border-white/10 p-5 text-red-300">Without Automation</div><div className="border-l border-white/10 p-5 text-emerald-300">With AutoListing</div></div>
-              {comparison.map(([a,b,c]) => <div key={a} className="grid grid-cols-1 border-b border-white/10 last:border-0 sm:grid-cols-[1.2fr_1fr_1fr]"><div className="p-5 font-bold">{a}</div><div className="border-white/10 p-5 text-sm text-white/50 sm:border-l">{b}</div><div className="border-white/10 p-5 text-sm font-semibold text-emerald-300 sm:border-l">{c}</div></div>)}
-            </div>
-          </div>
-        </section>
+        <section className="bg-white/[.025] px-5 py-16"><div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-yellow-300">Side-by-Side Analysis</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">The Difference Is Day &amp; Night</h2></div><div className="mt-9 overflow-hidden rounded-3xl border border-white/10 bg-[#0d0a13]"><div className="hidden grid-cols-[1.2fr_1fr_1fr] border-b border-white/10 bg-white/[.03] text-xs font-black uppercase tracking-wider text-white/50 sm:grid"><div className="p-5">Metric / Spec</div><div className="border-l border-white/10 p-5 text-red-300">Without Automation</div><div className="border-l border-white/10 p-5 text-emerald-300">With AutoListing</div></div>{comparison.map(([a,b,c]) => <div key={a} className="grid grid-cols-1 border-b border-white/10 last:border-0 sm:grid-cols-[1.2fr_1fr_1fr]"><div className="p-5 font-bold">{a}</div><div className="border-white/10 p-5 text-sm text-white/50 sm:border-l">{b}</div><div className="border-white/10 p-5 text-sm font-semibold text-emerald-300 sm:border-l">{c}</div></div>)}</div></div></section>
 
-        <section className="px-5 py-16">
-          <div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-fuchsia-300">Modern Challenge vs Solution</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">Overcome Common Seller Pitfalls</h2><p className="mx-auto mt-4 max-w-2xl text-white/55">Remove repetitive bottlenecks from the part of your business you control: your listing workflow.</p></div>
-            <div className="mt-10 grid gap-6 lg:grid-cols-2"><div className="rounded-3xl border border-red-400/15 bg-red-400/[.04] p-7"><p className="text-xs font-black tracking-[.25em] text-red-300">THE PAINFUL MANUAL TRUDGE</p><div className="mt-6 space-y-6">{problems.map(([n,t,d]) => <div key={n} className="flex gap-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-red-400/10 text-xs font-black text-red-300">{n}</span><div><h3 className="font-bold">{t}</h3><p className="mt-1 text-sm leading-6 text-white/50">{d}</p></div></div>)}</div><p className="mt-7 border-t border-red-300/10 pt-5 text-sm font-bold text-red-300">→ Less time for products, marketing and growth.</p></div>
-              <div className="rounded-3xl border border-emerald-400/15 bg-emerald-400/[.04] p-7"><p className="text-xs font-black tracking-[.25em] text-emerald-300">THE AUTOLISTING ADVANTAGE</p><div className="mt-6 space-y-6">{solutions.map(([n,t,d]) => <div key={n} className="flex gap-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-400/10 text-xs font-black text-emerald-300">✓</span><div><h3 className="font-bold">{n} · {t}</h3><p className="mt-1 text-sm leading-6 text-white/50">{d}</p></div></div>)}</div><p className="mt-7 border-t border-emerald-300/10 pt-5 text-sm font-bold text-emerald-300">→ A faster, repeatable catalog process.</p></div></div>
-          </div>
-        </section>
+        <section className="px-5 py-16"><div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-fuchsia-300">Modern Challenge vs Solution</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">Overcome Common Seller Pitfalls</h2><p className="mx-auto mt-4 max-w-2xl text-white/55">Remove repetitive bottlenecks from the part of your business you control: your listing workflow.</p></div><div className="mt-10 grid gap-6 lg:grid-cols-2"><div className="rounded-3xl border border-red-400/15 bg-red-400/[.04] p-7"><p className="text-xs font-black tracking-[.25em] text-red-300">THE PAINFUL MANUAL TRUDGE</p><div className="mt-6 space-y-6">{problems.map(([n,t,d]) => <div key={n} className="flex gap-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-red-400/10 text-xs font-black text-red-300">{n}</span><div><h3 className="font-bold">{t}</h3><p className="mt-1 text-sm leading-6 text-white/50">{d}</p></div></div>)}</div><p className="mt-7 border-t border-red-300/10 pt-5 text-sm font-bold text-red-300">→ Less time for products, marketing and growth.</p></div><div className="rounded-3xl border border-emerald-400/15 bg-emerald-400/[.04] p-7"><p className="text-xs font-black tracking-[.25em] text-emerald-300">THE AUTOLISTING ADVANTAGE</p><div className="mt-6 space-y-6">{solutions.map(([n,t,d]) => <div key={n} className="flex gap-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-400/10 text-xs font-black text-emerald-300">✓</span><div><h3 className="font-bold">{n} · {t}</h3><p className="mt-1 text-sm leading-6 text-white/50">{d}</p></div></div>)}</div><p className="mt-7 border-t border-emerald-300/10 pt-5 text-sm font-bold text-emerald-300">→ A faster, repeatable catalog process.</p></div></div></div></section>
 
-        <section className="bg-white/[.025] px-5 py-16">
-          <div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-yellow-300">Core Product Highlights</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">Built For Faster Catalog Growth</h2></div><div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{features.map(([icon,title,desc]) => <div key={title} className="rounded-3xl border border-white/10 bg-[#0f0b16] p-6 transition hover:-translate-y-1 hover:border-fuchsia-400/30"><div className="text-3xl">{icon}</div><h3 className="mt-4 text-lg font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-white/50">{desc}</p></div>)}</div></div>
-        </section>
+        <section className="bg-white/[.025] px-5 py-16"><div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-yellow-300">Core Product Highlights</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">Built For Faster Catalog Growth</h2></div><div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{features.map(([icon,title,desc]) => <div key={title} className="rounded-3xl border border-white/10 bg-[#0f0b16] p-6 transition hover:-translate-y-1 hover:border-fuchsia-400/30"><div className="text-3xl">{icon}</div><h3 className="mt-4 text-lg font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-white/50">{desc}</p></div>)}</div></div></section>
 
         <section className="px-5 py-16"><div className="mx-auto max-w-6xl"><div className="text-center"><p className="text-xs font-black uppercase tracking-[.3em] text-fuchsia-300">Authentic Seller Feedback</p><h2 className="mt-2 text-3xl font-black sm:text-5xl">Reviews That Inspire Trust</h2></div><div className="mt-10 grid gap-4 md:grid-cols-2">{reviews.map(([initial,name,place,text]) => <article key={name} className="rounded-3xl border border-white/10 bg-white/[.035] p-6"><div className="flex items-center gap-3"><div className="grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-fuchsia-500 to-purple-700 font-black">{initial}</div><div><h3 className="font-bold">{name}</h3><p className="text-xs text-white/40">{place}</p></div><span className="ml-auto text-yellow-300">★★★★★</span></div><p className="mt-5 text-sm leading-7 text-white/65">“{text}”</p><div className="mt-5 text-[10px] font-bold text-emerald-300">✓ VERIFIED ORDER</div></article>)}</div></div></section>
 
@@ -163,9 +77,7 @@ function Index() {
 
         <section id="checkout" className="px-5 py-16"><div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-yellow-300/25 bg-[radial-gradient(circle_at_50%_0%,rgba(250,204,21,.12),transparent_40%),#110d16] p-6 shadow-2xl shadow-yellow-950/30 sm:p-10"><div className="text-center"><div className="mx-auto inline-flex rounded-full bg-yellow-300 px-4 py-2 text-xs font-black text-black">BEST SELLER · LIMITED PERIOD</div><h2 className="mt-5 text-4xl font-black sm:text-6xl">Stop Overpaying. <span className="text-yellow-300">Start Saving Time.</span></h2><p className="mx-auto mt-4 max-w-2xl text-white/55">Get the complete AutoListing workflow, setup guide and support in one one-time purchase.</p></div><div className="mx-auto mt-9 max-w-xl rounded-3xl border border-white/10 bg-black/20 p-6"><div className="text-center"><p className="text-sm text-white/40 line-through">M.R.P. ₹1,999</p><div className="mt-1 text-6xl font-black text-yellow-300">₹199</div><p className="mt-1 font-black text-emerald-300">90% OFF · ONE-TIME</p></div><div className="mt-7 space-y-3">{[["💻","Meesho Auto Listing Workflow","₹1,999"],["📦","Shipping Setup Guide","₹1,499"],["🖼️","Product Image Guide","₹999"],["🎥","Step-by-Step Hindi Tutorial","₹499"],["💬","1-on-1 Setup Support","₹999"]].map(([icon,title,value]) => <div key={title} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[.03] p-4"><span className="text-xl">{icon}</span><span className="flex-1 text-sm font-semibold">{title}</span><span className="text-xs text-white/35 line-through">{value}</span></div>)}</div><div className="mt-6 flex items-center justify-between border-t border-white/10 pt-5"><span className="text-sm text-white/45">Total package value</span><span className="font-bold text-white/60 line-through">₹5,995</span></div><a href="#" className="mt-5 flex w-full items-center justify-center rounded-2xl bg-yellow-300 px-6 py-5 text-xl font-black text-black transition hover:scale-[1.02]">GET ACCESS NOW · ₹199 →</a><p className="mt-4 text-center text-[10px] text-white/35">🔒 Secure checkout · UPI · Cards · Net Banking</p></div></div></section>
       </main>
-
       <footer className="border-t border-white/10 bg-black/20 px-5 py-12"><div className="mx-auto max-w-6xl"><div className="grid gap-8 md:grid-cols-2"><div><div className="text-2xl font-black">Meesho <span className="text-yellow-300">AutoListing</span></div><p className="mt-3 max-w-lg text-sm leading-6 text-white/40">An independent productivity toolkit for marketplace sellers. Designed to make repetitive catalog work faster and easier.</p></div><div className="md:text-right"><p className="text-sm font-bold">Instant Support</p><p className="mt-2 text-sm text-white/45">support@autolisting.example</p></div></div><div className="mt-10 border-t border-white/10 pt-6 text-xs leading-6 text-white/30">Legal disclaimer: This is an independent productivity tool and is not affiliated with, endorsed by, or sponsored by Meesho. Seller results vary by product, pricing, marketplace policies and demand. Always follow the marketplace's current rules and terms.<br/><br/>© 2026 Meesho AutoListing. All rights reserved.</div></div></footer>
-
       <a href="#checkout" className="fixed bottom-4 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 items-center justify-center rounded-full bg-yellow-300 px-6 py-4 text-sm font-black text-black shadow-2xl shadow-yellow-950/60 sm:hidden">BUY NOW · ₹199</a>
     </div>
   );
