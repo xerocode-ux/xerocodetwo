@@ -99,3 +99,14 @@
   position: relative;
   z-index: 20;
 }
+
+/* Reduce the empty space above the hero bundle badge. */
+main > section:first-child {
+  padding-top: 20px !important;
+}
+
+@media (min-width: 640px) {
+  main > section:first-child {
+    padding-top: 32px !important;
+  }
+}
