@@ -7,8 +7,7 @@ declare global {
   }
 }
 
-const WHATSAPP_URL =
-  "https://api.whatsapp.com/send/?phone=639467683297&text=Hello%21+Can+I+get+more+info+on+this%3F&type=phone_number&app_absent=0";
+const TELEGRAM_URL = "https://t.me/xerocodebot";
 
 const TICKERS = [
   { label: "NIFTY", value: "24,812", change: "0.62%", up: true },
@@ -38,7 +37,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified WhatsApp channel.",
+          "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified Telegram channel.",
       },
       {
         property: "og:title",
@@ -47,7 +46,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified WhatsApp channel.",
+          "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified Telegram channel.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -58,7 +57,7 @@ export const Route = createFileRoute("/")({
       {
         name: "twitter:description",
         content:
-          "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified WhatsApp channel.",
+          "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified Telegram channel.",
       },
     ],
   }),
@@ -94,9 +93,9 @@ function Index() {
     return () => clearInterval(id);
   }, []);
 
-  const trackWhatsAppClick = () => {
+  const trackTelegramClick = () => {
     window.fbq?.("track", "Subscribe", {
-      content_name: "WhatsApp Channel",
+      content_name: "Telegram Channel",
     });
   };
 
@@ -130,14 +129,14 @@ function Index() {
         </p>
 
         <a
-          href={WHATSAPP_URL}
+          href={TELEGRAM_URL}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={trackWhatsAppClick}
+          onClick={trackTelegramClick}
           className="cta-gradient mt-6 flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-lg font-bold text-primary-foreground transition-transform hover:scale-[1.02]"
         >
-          <span className="text-2xl">💬</span>
-          Join WhatsApp Channel
+          <span className="text-2xl">✈️</span>
+          Join Telegram Channel
         </a>
 
         <div className="mt-4 grid w-full grid-cols-2 gap-4">
@@ -165,7 +164,7 @@ function Index() {
 
         <div className="mt-4 w-full rounded-2xl border border-border/70 bg-card px-5 py-4">
           <p className="text-sm text-muted-foreground">
-            WhatsApp is ready — or tap above
+            Telegram is ready — or tap above
           </p>
           <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-secondary">
             <div
