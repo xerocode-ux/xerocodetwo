@@ -90,9 +90,9 @@
   animation: ticker-scroll 30s linear infinite;
 }
 
-/* CTA stays in normal flow above the video; keep only a small visual gap. */
+/* CTA stays in normal flow above the video with a comfortable small gap. */
 .buy-attention + div {
-  margin-top: 8px !important;
+  margin-top: 16px !important;
 }
 
 .buy-attention {
