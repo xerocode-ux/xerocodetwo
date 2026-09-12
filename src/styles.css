@@ -47,7 +47,7 @@
   --primary: oklch(0.82 0.17 165);
   --primary-foreground: oklch(0.19 0.05 165);
   --secondary: oklch(0.26 0.03 165);
-  --secondary-foreground: oklch(0.98 0.01 160);
+  --secondary-foreground: oklch(0.98 0.01 165);
   --muted: oklch(0.26 0.03 165);
   --muted-foreground: oklch(0.72 0.02 165);
   --accent: oklch(0.26 0.03 165);
@@ -60,24 +60,13 @@
   --gold: oklch(0.82 0.16 82);
   --up: oklch(0.82 0.17 165);
   --down: oklch(0.66 0.2 25);
-  --gradient-page: radial-gradient(
-    ellipse 90% 55% at 50% 0%,
-    oklch(0.28 0.09 165 / 0.75),
-    transparent 70%
-  );
-  --gradient-cta: linear-gradient(
-    100deg,
-    oklch(0.85 0.17 168),
-    oklch(0.78 0.16 158)
-  );
+  --gradient-page: radial-gradient(ellipse 90% 55% at 50% 0%, oklch(0.28 0.09 165 / 0.75), transparent 70%);
+  --gradient-cta: linear-gradient(100deg, oklch(0.85 0.17 168), oklch(0.78 0.16 158));
   --shadow-cta: 0 12px 40px -8px oklch(0.82 0.17 165 / 0.45);
 }
 
 @layer base {
-  * {
-    border-color: var(--color-border);
-  }
-
+  * { border-color: var(--color-border); }
   body {
     background-color: var(--color-background);
     background-image: var(--gradient-page);
@@ -93,27 +82,20 @@
 }
 
 @keyframes ticker-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 @utility animate-ticker {
   animation: ticker-scroll 30s linear infinite;
 }
 
-/* Keep the primary CTA visually over the lower part of the tutorial video. */
+/* CTA stays in normal flow above the video; keep only a small visual gap. */
+.buy-attention + div {
+  margin-top: 8px !important;
+}
+
 .buy-attention {
   position: relative;
   z-index: 20;
-  transform: translateY(-105px);
-}
-
-@media (max-width: 640px) {
-  .buy-attention {
-    transform: translateY(-85px);
-  }
 }
