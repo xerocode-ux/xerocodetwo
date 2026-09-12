@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
-const CHECKOUT_URL = "https://superprofile.bio/vp/meesho-seller-tools-%E2%80%93-autolisting---low-shipping-tool";
+const CHECKOUT_URL = "https://superprofile.bio/vp/meesho-seller-tools";
 const META_PIXEL_ID = "1085587727790700";
 const TUTORIAL_VIDEO = "https://res.cloudinary.com/dpbnvu2g/video/upload/v1788065206/video_260830_101326.mp4";
 const testimonialImages = ["https://i.ibb.co/d0WcnRmq/Whats-App-Image-2026-06-15-at-5-46-34-PM-00-00-57-00-Still015.png","https://i.ibb.co/b4DVgrJ/Whats-App-Image-2026-06-15-at-5-46-34-PM-00-00-31-09-Still020.png","https://i.ibb.co/FbgnFzZ5/Whats-App-Image-2026-06-15-at-5-46-34-PM-00-01-02-09-Still014.png","https://i.ibb.co/wh9bWWfL/Whats-App-Image-2026-06-15-at-5-46-34-PM-00-00-02-20-Still026.png","https://i.ibb.co/KzKx4v8J/Whats-App-Image-2026-06-15-at-5-46-34-PM-00-00-07-08-Still025.png"];
