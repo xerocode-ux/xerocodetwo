@@ -104,3 +104,16 @@
 @utility animate-ticker {
   animation: ticker-scroll 30s linear infinite;
 }
+
+/* Keep the primary CTA visually over the lower part of the tutorial video. */
+.buy-attention {
+  position: relative;
+  z-index: 20;
+  transform: translateY(-105px);
+}
+
+@media (max-width: 640px) {
+  .buy-attention {
+    transform: translateY(-85px);
+  }
+}
