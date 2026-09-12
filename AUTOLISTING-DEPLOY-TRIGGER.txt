@@ -1,0 +1,2 @@
+AutoListing deployment refresh trigger.
+The current autolisting-clone branch contains the cleaned landing page without the WhatsApp Buyer Review proof block.
