@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-const APPLY_URL = "#apply";
+const APPLY_URL = "https://chat.whatsapp.com/EJ0LCcArFRLHqsFml1Ua8A";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -88,6 +88,8 @@ function Index() {
 
           <a
             href={APPLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={trackLoanClick}
             className="mt-6 flex w-full items-center justify-center gap-2 rounded-full border border-fuchsia-300/40 bg-gradient-to-r from-violet-700 via-purple-600 to-fuchsia-600 px-6 py-4 text-lg font-bold text-white shadow-[0_0_35px_rgba(168,85,247,0.45)] transition-transform hover:scale-[1.02]"
           >
