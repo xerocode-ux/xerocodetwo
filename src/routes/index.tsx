@@ -91,8 +91,8 @@ function Index() {
             onClick={trackLoanClick}
             className="cta-gradient mt-6 flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-lg font-bold text-primary-foreground shadow-lg transition-transform hover:scale-[1.02]"
           >
-            <span className="text-2xl">✓</span>
-            Check Eligibility
+            <span className="text-2xl">💬</span>
+            Join WhatsApp Channel
           </a>
         </div>
 
