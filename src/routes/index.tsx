@@ -12,31 +12,31 @@ const APPLY_URL = "#apply";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Instant Loan Assistance — Check Your Eligibility" },
+      { title: "Instant Loan — Up to ₹50,000" },
       {
         name: "description",
         content:
-          "Explore personal loan options and check your eligibility. Loan approval, amount, interest rate and fees are subject to lender criteria.",
+          "Explore personal loan options up to ₹50,000 and check your eligibility. Loan approval and terms are subject to lender criteria.",
       },
       {
         property: "og:title",
-        content: "Instant Loan Assistance — Check Your Eligibility",
+        content: "Instant Loan — Up to ₹50,000",
       },
       {
         property: "og:description",
         content:
-          "Explore personal loan options and check your eligibility. Loan approval and terms are subject to lender criteria.",
+          "Explore personal loan options up to ₹50,000. Loan approval and terms are subject to lender criteria.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "Instant Loan Assistance — Check Your Eligibility",
+        content: "Instant Loan — Up to ₹50,000",
       },
       {
         name: "twitter:description",
         content:
-          "Check your eligibility for personal loan options. Terms are subject to lender approval.",
+          "Explore personal loan options up to ₹50,000. Terms are subject to lender approval.",
       },
     ],
   }),
@@ -78,7 +78,7 @@ function Index() {
 
           <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight">
             Instant Loan
-            <span className="block text-primary">Eligibility Check</span>
+            <span className="block text-primary">Upto ₹50,000</span>
           </h1>
 
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
