@@ -7,80 +7,41 @@ declare global {
   }
 }
 
-const TELEGRAM_URL = "https://t.me/xerocodebot";
-
-const TICKERS = [
-  { label: "NIFTY", value: "24,812", change: "0.62%", up: true },
-  { label: "SENSEX", value: "81,240", change: "0.14%", up: false },
-  { label: "BANKNIFTY", value: "53,190", change: "0.41%", up: true },
-  { label: "GOLD", value: "71,455", change: "0.28%", up: true },
-  { label: "USD/INR", value: "83.42", change: "0.09%", up: false },
-];
-
-const FEATURES = [
-  { icon: "💰", label: "Without Investment" },
-  { icon: "📋", label: "Daily Task" },
-  { icon: "⚡", label: "Instant Setup" },
-  { icon: "🔐", label: "Verified Channel" },
-];
-
-const STATS = [
-  { value: "5K+", label: "Members" },
-  { value: "100%", label: "Free" },
-  { value: "24/7", label: "Updates" },
-];
+const APPLY_URL = "#apply";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Success With Me — Start Earning Without Investment" },
+      { title: "Instant Loan Assistance — Check Your Eligibility" },
       {
         name: "description",
         content:
-          "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified Telegram channel.",
+          "Explore personal loan options and check your eligibility. Loan approval, amount, interest rate and fees are subject to lender criteria.",
       },
       {
         property: "og:title",
-        content: "Success With Me — Start Earning Without Investment",
+        content: "Instant Loan Assistance — Check Your Eligibility",
       },
       {
         property: "og:description",
         content:
-          "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified Telegram channel.",
+          "Explore personal loan options and check your eligibility. Loan approval and terms are subject to lender criteria.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "Success With Me — Start Earning Without Investment",
+        content: "Instant Loan Assistance — Check Your Eligibility",
       },
       {
         name: "twitter:description",
         content:
-          "Join Success With Me free: simple daily tasks, zero investment, no spam. Get instant access to our verified Telegram channel.",
+          "Check your eligibility for personal loan options. Terms are subject to lender approval.",
       },
     ],
   }),
   component: Index,
 });
-
-function Ticker() {
-  const row = [...TICKERS, ...TICKERS, ...TICKERS, ...TICKERS];
-
-  return (
-    <div className="w-full overflow-hidden border-b border-border/60 bg-card/40 py-2">
-      <div className="flex w-max animate-ticker gap-8 whitespace-nowrap px-4">
-        {row.map((t, i) => (
-          <span key={i} className="text-[11px] font-semibold tracking-wide">
-            <span className={t.up ? "text-up" : "text-down"}>
-              {t.label} {t.value} {t.up ? "▲" : "▼"} {t.change}
-            </span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function Index() {
   const [, setSeconds] = useState(10);
@@ -89,93 +50,126 @@ function Index() {
     const id = setInterval(() => {
       setSeconds((s) => (s > 0 ? s - 1 : 0));
     }, 1000);
-
     return () => clearInterval(id);
   }, []);
 
-  const trackTelegramClick = () => {
+  const trackLoanClick = () => {
     window.fbq?.("track", "Subscribe", {
-      content_name: "Telegram Channel",
+      content_name: "Loan Eligibility CTA",
     });
   };
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Ticker />
-      <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center px-5 pb-14 pt-4 text-center">
-        <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-card text-3xl shadow-lg">
-          📈
-        </div>
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="w-full bg-primary px-4 py-2 text-center text-xs font-semibold text-primary-foreground">
+        🔒 Secure application process • Terms shown before acceptance
+      </div>
 
-        <h1 className="mt-3 text-4xl font-extrabold tracking-tight">
-          Success <span className="text-primary">With Me</span>
-        </h1>
-
-        <p className="mt-1 text-sm font-medium tracking-[0.2em] text-muted-foreground">
-          WITHOUT INVESTMENT WORK
-        </p>
-
-        <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-primary/50 px-5 py-2 text-xs font-bold tracking-[0.15em] text-primary">
-          <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-          CHANNEL ACTIVE NOW
-        </div>
-
-        <h2 className="mt-5 text-2xl font-bold leading-snug">
-          Start earning <span className="text-gold">without any investment</span> — join now
-        </h2>
-
-        <p className="mt-3 text-sm text-muted-foreground">
-          Simple daily tasks, zero cost to join. No spam, no hidden charges.
-        </p>
-
-        <a
-          href={TELEGRAM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={trackTelegramClick}
-          className="cta-gradient mt-6 flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-lg font-bold text-primary-foreground transition-transform hover:scale-[1.02]"
-        >
-          <span className="text-2xl">✈️</span>
-          Join Telegram Channel
-        </a>
-
-        <div className="mt-4 grid w-full grid-cols-2 gap-4">
-          {FEATURES.map((f) => (
-            <div
-              key={f.label}
-              className="rounded-2xl border border-border/70 bg-card px-4 py-5 shadow-sm"
-            >
-              <div className="text-2xl">{f.icon}</div>
-              <div className="mt-2 text-sm font-semibold">{f.label}</div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-4 grid w-full grid-cols-3 rounded-2xl border border-border/70 bg-card py-4">
-          {STATS.map((s) => (
-            <div key={s.label}>
-              <div className="text-lg font-extrabold text-gold">{s.value}</div>
-              <div className="text-[11px] uppercase tracking-wide text-muted-foreground">
-                {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-4 w-full rounded-2xl border border-border/70 bg-card px-5 py-4">
-          <p className="text-sm text-muted-foreground">
-            Telegram is ready — or tap above
-          </p>
-          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-secondary">
-            <div
-              className="h-full rounded-full bg-primary"
-              style={{ width: "100%" }}
-            />
+      <main className="mx-auto max-w-md px-5 pb-14 pt-8">
+        <div className="text-center">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-3xl shadow-sm">
+            💳
           </div>
+
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-2 text-xs font-bold text-primary">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
+            APPLICATIONS OPEN
+          </div>
+
+          <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight">
+            Instant Loan
+            <span className="block text-primary">Eligibility Check</span>
+          </h1>
+
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            Tell us a few basic details to explore available personal loan
+            options. Approval and final terms depend on the lender.
+          </p>
+
+          <a
+            href={APPLY_URL}
+            onClick={trackLoanClick}
+            className="cta-gradient mt-6 flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-lg font-bold text-primary-foreground shadow-lg transition-transform hover:scale-[1.02]"
+          >
+            <span className="text-2xl">✓</span>
+            Check Eligibility
+          </a>
         </div>
 
-        <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
-          Joining the channel is free. Results and earnings from any task can vary and are not guaranteed. Please do your own research before proceeding.
+        <section className="mt-8 grid grid-cols-2 gap-3">
+          {[
+            ["⚡", "Quick Process"],
+            ["📱", "Online Application"],
+            ["🔐", "Secure Details"],
+            ["📄", "Clear Terms"],
+          ].map(([icon, label]) => (
+            <div
+              key={label}
+              className="rounded-2xl border border-border/70 bg-card p-4 text-center shadow-sm"
+            >
+              <div className="text-2xl">{icon}</div>
+              <div className="mt-2 text-sm font-semibold">{label}</div>
+            </div>
+          ))}
+        </section>
+
+        <section
+          id="apply"
+          className="mt-6 rounded-3xl border border-border/70 bg-card p-5 shadow-sm"
+        >
+          <div className="text-left">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+              Start here
+            </p>
+            <h2 className="mt-2 text-2xl font-bold">Check your options</h2>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              Eligibility is not a guarantee of approval. The applicable
+              lender will provide the sanctioned amount, interest/APR, fees,
+              tenure and repayment schedule before acceptance.
+            </p>
+          </div>
+
+          <div className="mt-5 space-y-3">
+            {[
+              "Basic eligibility assessment",
+              "Loan amount and tenure options",
+              "Interest/APR and applicable charges",
+              "Repayment schedule before acceptance",
+            ].map((item) => (
+              <div
+                key={item}
+                className="flex items-center gap-3 rounded-xl bg-secondary/60 px-4 py-3 text-sm"
+              >
+                <span className="text-primary">✓</span>
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={trackLoanClick}
+            className="mt-5 w-full rounded-full border border-primary px-5 py-3.5 text-base font-bold text-primary transition-colors hover:bg-primary/5"
+          >
+            Start Application
+          </button>
+        </section>
+
+        <section className="mt-6 rounded-2xl border border-border/70 bg-card p-5">
+          <h3 className="font-bold">Important information</h3>
+          <p className="mt-2 text-xs leading-5 text-muted-foreground">
+            This page is for loan information and eligibility assistance.
+            Loan approval, amount, interest rate, fees and tenure are decided
+            by the applicable lender based on its policies and your profile.
+            Do not pay any person claiming to guarantee approval. Review the
+            lender, APR, processing fees, repayment schedule and privacy terms
+            before proceeding.
+          </p>
+        </section>
+
+        <p className="mt-6 text-center text-[11px] leading-5 text-muted-foreground">
+          By proceeding, you acknowledge that eligibility is subject to lender
+          criteria and that loan terms will be disclosed before acceptance.
         </p>
       </main>
     </div>
